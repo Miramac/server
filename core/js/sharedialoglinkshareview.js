@@ -85,6 +85,12 @@
 				'		<label for="sharingDialogAllowPublicEditing-{{cid}}">{{publicEditingLabel}}</label>' +
 				'	</span></li>' +
 				'{{/if}}' +
+				'<li>' +
+				'<a href="#" class="share-rename-label"><span class="icon-loading-small hidden"></span>' +
+				'	<span class="icon icon-rename"></span>' +
+				'	<span>{{addRenameLabel}}</span>' +
+				'</a>' +
+				'</li>' +
 				'{{#if showPasswordCheckBox}}' +
 				'	<li><span class="shareOption menuitem">' +
 				'		<input type="checkbox" name="showPassword" id="showPassword-{{cid}}" class="checkbox showPasswordCheckbox"' +
@@ -406,7 +412,7 @@
 				permissions: permissions
 			});
 		},
-		
+
 		showNoteForm: function(event) {
 			event.preventDefault();
 			event.stopPropagation();
@@ -431,9 +437,9 @@
 			var shareId = $li.data('share-id');
 			var $menu = $element.closest('li');
 			var $form = $menu.next('li.share-note-form');
-	
+
 			$form.find('.share-note').val('');
-			
+
 			$form.addClass('hidden');
 			$menu.find('.share-note-delete').hide();
 
@@ -636,6 +642,7 @@
 				defaultExpireDate: moment().add(1, 'day').format('DD-MM-YYYY'), // Can't expire today
 				shareNote: this.model.get('linkShare').note,
 				addNoteLabel: t('core', 'Note to recipient'),
+				addRenameLabel: t('core', 'Rename'),
 			});
 
 			var pendingPopover = this.pendingPopoverMenuTemplate({
@@ -745,7 +752,7 @@
 			var datePicker = $(expirationDatePicker);
 			var state = $element.prop('checked');
 			datePicker.toggleClass('hidden', !state);
-			
+
 			if (!state) {
 				// disabled, let's hide the input and
 				// set the expireDate to nothing
